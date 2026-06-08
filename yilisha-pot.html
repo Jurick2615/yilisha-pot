@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>伊丽莎锅</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    /* 背景粒子 */
+    .particles {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    .particle {
+      position: absolute;
+      width: 6px; height: 6px;
+      background: rgba(255, 200, 100, 0.3);
+      border-radius: 50%;
+      animation: float 8s infinite ease-in-out;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+      50% { transform: translateY(-30px) scale(1.5); opacity: 0.8; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 32px;
+      padding: 50px 40px 40px;
+      border: 1px solid rgba(255, 200, 100, 0.15);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+      text-align: center;
+    }
+
+    /* 砂锅 */
+    .pot-wrapper {
+      position: relative; width: 120px; height: 120px; margin: 0 auto 30px;
+    }
+    .pot { width: 120px; height: 120px; position: relative; }
+    .pot-lid {
+      width: 80px; height: 18px;
+      background: linear-gradient(135deg, #8B4513, #A0522D);
+      border-radius: 50%; margin: 0 auto;
+      position: relative; z-index: 2;
+      box-shadow: 0 2px 8px rgba(139,69,19,0.4);
+    }
+    .pot-lid-knob {
+      width: 16px; height: 16px;
+      background: linear-gradient(135deg, #D2691E, #8B4513);
+      border-radius: 50%; margin: -8px auto 0;
+      position: relative; z-index: 3;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .pot-body {
+      width: 100px; height: 60px;
+      background: linear-gradient(135deg, #A0522D 0%, #8B4513 50%, #6B3410 100%);
+      border-radius: 0 0 50% 50% / 0 0 100% 100%;
+      margin: 0 auto; position: relative; z-index: 1;
+      box-shadow: inset 0 -8px 20px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .pot-handle {
+      position: absolute; width: 20px; height: 20px;
+      border: 3px solid #A0522D; border-radius: 50%; top: 30px;
+    }
+    .pot-handle.left { left: -12px; }
+    .pot-handle.right { right: -12px; }
+
+    .flames {
+      display: flex; justify-content: center; gap: 6px; margin-top: -6px;
+    }
+    .flame {
+      width: 12px; height: 20px;
+      background: linear-gradient(to top, #FF4500, #FF8C00, #FFD700);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      animation: burn 1.2s infinite alternate ease-in-out;
+      opacity: 0.7; transform-origin: bottom center;
+    }
+    .flame:nth-child(2) { height: 28px; animation-delay: 0.2s; width: 14px; }
+    .flame:nth-child(3) { height: 22px; animation-delay: 0.4s; }
+    .flame:nth-child(4) { height: 18px; animation-delay: 0.6s; width: 10px; }
+    @keyframes burn {
+      0% { transform: scaleY(0.8) scaleX(1); opacity: 0.6; }
+      50% { transform: scaleY(1.2) scaleX(0.9); opacity: 0.9; }
+      100% { transform: scaleY(1) scaleX(1.1); opacity: 0.7; }
+    }
+
+    .steam-container {
+      position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 40px;
+    }
+    .steam {
+      position: absolute; width: 8px; height: 16px;
+      background: rgba(255,255,255,0.15); border-radius: 50%;
+      animation: rise 2.5s infinite ease-out;
+    }
+    .steam:nth-child(1) { left: 10px; animation-delay: 0s; }
+    .steam:nth-child(2) { left: 28px; animation-delay: 0.6s; }
+    .steam:nth-child(3) { left: 44px; animation-delay: 1.2s; }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 0.4; }
+      100% { transform: translateY(-35px) scale(2); opacity: 0; }
+    }
+
+    .title {
+      font-size: 42px; font-weight: 900;
+      background: linear-gradient(135deg, #FFD700, #FFA500, #FF6347);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px; letter-spacing: 4px;
+    }
+    .subtitle {
+      font-size: 18px; color: rgba(255,200,100,0.6);
+      margin-bottom: 24px; letter-spacing: 6px;
+    }
+    .divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,200,100,0.5), transparent);
+      margin: 0 auto 24px;
+    }
+
+    .description {
+      color: rgba(255,255,255,0.75); font-size: 16px;
+      line-height: 1.9; margin-bottom: 24px;
+    }
+    .description strong { color: #FFD700; font-weight: 600; }
+
+    .tag-list {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 10px; margin-bottom: 24px;
+    }
+    .tag {
+      padding: 6px 18px; border-radius: 20px;
+      border: 1px solid rgba(255,200,100,0.2);
+      color: rgba(255,200,100,0.8); font-size: 13px;
+      background: rgba(255,200,100,0.05);
+      transition: all 0.3s;
+    }
+    .tag:hover {
+      background: rgba(255,200,100,0.12);
+      border-color: rgba(255,200,100,0.4);
+      transform: translateY(-2px);
+    }
+
+    /* ===== 丝绸之路 SVG 地图 ===== */
+    .silk-road-section {
+      margin: 24px 0 20px;
+      position: relative;
+    }
+    .silk-road-section h3 {
+      color: rgba(255,200,100,0.7);
+      font-size: 14px; letter-spacing: 4px;
+      margin-bottom: 14px; font-weight: 400;
+    }
+    .map-container {
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,200,100,0.08);
+    }
+    .map-container svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .footer {
+      color: rgba(255,255,255,0.2); font-size: 12px;
+      letter-spacing: 2px; margin-top: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 30px 20px; }
+      .title { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles">
+    <div class="particle" style="top:10%;left:10%;animation-delay:0s;"></div>
+    <div class="particle" style="top:20%;right:15%;animation-delay:1s;"></div>
+    <div class="particle" style="top:60%;left:8%;animation-delay:2s;"></div>
+    <div class="particle" style="top:70%;right:10%;animation-delay:3s;"></div>
+    <div class="particle" style="top:40%;left:80%;animation-delay:4s;"></div>
+    <div class="particle" style="bottom:15%;left:50%;animation-delay:5s;"></div>
+  </div>
+
+  <div class="card">
+    <!-- 砂锅 -->
+    <div class="pot-wrapper">
+      <div class="pot">
+        <div class="steam-container">
+          <div class="steam"></div><div class="steam"></div><div class="steam"></div>
+        </div>
+        <div class="pot-lid-knob"></div>
+        <div class="pot-lid"></div>
+        <div class="pot-handle left"></div>
+        <div class="pot-handle right"></div>
+        <div class="pot-body"></div>
+        <div class="flames">
+          <div class="flame"></div><div class="flame"></div>
+          <div class="flame"></div><div class="flame"></div>
+        </div>
+      </div>
+    </div>
+
+    <h1 class="title">伊丽莎锅</h1>
+    <div class="subtitle">YILISHA · POT</div>
+    <div class="divider"></div>
+
+    <p class="description">
+      我是 <strong>伊丽莎锅</strong> 🍲<br>
+      不仅名字高贵，炖出来的汤更香。<br>
+      一口好锅，一锅好味。
+    </p>
+
+    <div class="tag-list">
+      <span class="tag">🔥 砂锅炖煮</span>
+      <span class="tag">🍲 慢火出味</span>
+      <span class="tag">🧂 恰到好处</span>
+      <span class="tag">❤️ 温暖人心</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 丝绸之路动态地图 -->
+    <div class="silk-road-section">
+      <h3>🏯 丝绸之路 · 途经要地</h3>
+      <div class="map-container">
+        <svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="glow-strong">
+              <feGaussianBlur stdDeviation="5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="glow-sea">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#FF6347"/>
+              <stop offset="50%" stop-color="#FFD700"/>
+              <stop offset="100%" stop-color="#FF6347"/>
+            </linearGradient>
+            <linearGradient id="seaRouteGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#00CED1"/>
+              <stop offset="50%" stop-color="#40E0D0"/>
+              <stop offset="100%" stop-color="#00CED1"/>
+            </linearGradient>
+            <radialGradient id="desertGlow" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" stop-color="rgba(255,200,100,0.04)"/>
+              <stop offset="100%" stop-color="rgba(255,200,100,0)"/>
+            </radialGradient>
+            <pattern id="dots" patternUnits="userSpaceOnUse" width="20" height="20">
+              <circle cx="10" cy="10" r="0.5" fill="rgba(255,200,100,0.06)"/>
+            </pattern>
+            <!-- 海浪图案 -->
+            <pattern id="waves" patternUnits="userSpaceOnUse" width="30" height="8">
+              <path d="M 0 4 Q 7.5 0 15 4 Q 22.5 8 30 4" fill="none" stroke="rgba(0,206,209,0.06)" stroke-width="1"/>
+            </pattern>
+          </defs>
+
+          <!-- 沙漠底纹（上半部分） -->
+          <rect x="0" y="0" width="640" height="150" fill="url(#desertGlow)"/>
+          <rect x="0" y="0" width="640" height="150" fill="url(#dots)"/>
+
+          <!-- 海洋底纹（下半部分） -->
+          <rect x="0" y="150" width="640" height="190" fill="rgba(0,50,80,0.08)"/>
+          <rect x="0" y="155" width="640" height="175" fill="url(#waves)"/>
+
+          <!-- 经纬网格 -->
+          <g opacity="0.04" stroke="rgba(255,200,100,0.3)" stroke-width="0.5">
+            <line x1="0" y1="68" x2="640" y2="68"/>
+            <line x1="0" y1="136" x2="640" y2="136"/>
+            <line x1="0" y1="204" x2="640" y2="204"/>
+            <line x1="0" y1="272" x2="640" y2="272"/>
+            <line x1="128" y1="0" x2="128" y2="340"/>
+            <line x1="256" y1="0" x2="256" y2="340"/>
+            <line x1="384" y1="0" x2="384" y2="340"/>
+            <line x1="512" y1="0" x2="512" y2="340"/>
+          </g>
+
+          <!-- 大陆轮廓（抽象） -->
+          <path d="M 0 30 Q 120 5 250 40 Q 380 75 500 45 Q 580 25 640 50"
+                fill="none" stroke="rgba(255,200,100,0.04)" stroke-width="70" stroke-linecap="round"/>
+
+          <!-- 大洲标注 -->
+          <g opacity="0.12">
+            <!-- 欧洲 -->
+            <text x="18" y="30" fill="#87CEEB" font-size="22" font-weight="bold" letter-spacing="4">欧洲</text>
+            <text x="18" y="46" fill="#87CEEB" font-size="8" opacity="0.5" letter-spacing="2">EUROPE</text>
+
+            <!-- 亚洲 -->
+            <text x="340" y="20" fill="#FFD700" font-size="26" font-weight="bold" letter-spacing="8">亚洲</text>
+            <text x="340" y="38" fill="#FFD700" font-size="10" opacity="0.5" letter-spacing="3">ASIA</text>
+
+            <!-- 非洲 -->
+            <text x="88" y="252" fill="#FF8C00" font-size="20" font-weight="bold" letter-spacing="4">非洲</text>
+            <text x="88" y="268" fill="#FF8C00" font-size="8" opacity="0.5" letter-spacing="2">AFRICA</text>
+          </g>
+
+          <!-- 海洋动物剪影 -->
+          <g opacity="0.04">
+            <text x="520" y="290" font-size="20" fill="#00CED1">🐋</text>
+            <text x="150" y="280" font-size="16" fill="#00CED1">🐬</text>
+            <text x="350" y="310" font-size="14" fill="#00CED1">🐟</text>
+          </g>
+
+          <!-- ============================================================ -->
+          <!-- 🌏 陆上丝绸之路 -->
+          <!-- ============================================================ -->
+
+          <!-- 陆路底光 -->
+          <path d="M 610 100 Q 540 80 485 85 Q 430 90 390 75 Q 340 55 290 65 Q 240 75 190 60 Q 140 45 100 55 Q 60 65 30 90"
+                fill="none" stroke="rgba(255,200,100,0.08)" stroke-width="18" stroke-linecap="round"/>
+
+          <!-- 陆路虚线动画 -->
+          <path d="M 610 100 Q 540 80 485 85 Q 430 90 390 75 Q 340 55 290 65 Q 240 75 190 60 Q 140 45 100 55 Q 60 65 30 90"
+                fill="none" stroke="url(#routeGrad)" stroke-width="2.5"
+                stroke-dasharray="12 8" stroke-linecap="round"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="0" to="-200" dur="3s" repeatCount="indefinite"/>
+          </path>
+
+          <!-- 北线分支 -->
+          <path d="M 485 85 Q 440 50 340 40 Q 240 30 140 30 Q 80 30 30 70"
+                fill="none" stroke="rgba(255,180,50,0.15)" stroke-width="1.5"
+                stroke-dasharray="6 8" stroke-linecap="round">
+            <animate attributeName="stroke-dashoffset" from="0" to="-140" dur="4s" repeatCount="indefinite"/>
+          </path>
+
+          <!-- 骆驼商队光点 -->
+          <circle r="5" fill="none" filter="url(#glow-strong)">
+            <animateMotion dur="8s" repeatCount="indefinite"
+              path="M 610 100 Q 540 80 485 85 Q 430 90 390 75 Q 340 55 290 65 Q 240 75 190 60 Q 140 45 100 55 Q 60 65 30 90"/>
+            <animate attributeName="fill" values="rgba(255,200,100,0);rgba(255,200,100,0.9);rgba(255,200,100,0.9);rgba(255,200,100,0)" dur="8s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="6" fill="#FFD700" opacity="0.4" filter="url(#glow-strong)">
+            <animateMotion dur="8s" repeatCount="indefinite"
+              path="M 610 100 Q 540 80 485 85 Q 430 90 390 75 Q 340 55 290 65 Q 240 75 190 60 Q 140 45 100 55 Q 60 65 30 90"/>
+          </circle>
+          <circle r="2.5" fill="#FFF8DC">
+            <animateMotion dur="8s" repeatCount="indefinite"
+              path="M 610 100 Q 540 80 485 85 Q 430 90 390 75 Q 340 55 290 65 Q 240 75 190 60 Q 140 45 100 55 Q 60 65 30 90"/>
+          </circle>
+
+          <!-- 陆路途经点 -->
+          <g filter="url(#glow-strong)">
+            <circle cx="30" cy="90" r="6" fill="#FF6347">
+              <animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="30" cy="90" r="10" fill="none" stroke="#FF6347" stroke-width="1" opacity="0.4">
+              <animate attributeName="r" values="10;16;10" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <text x="30" y="82" fill="#FFD700" font-size="10" text-anchor="middle">君士坦丁堡</text>
+
+          <circle cx="190" cy="60" r="4.5" fill="#FFD700" filter="url(#glow-strong)">
+            <animate attributeName="r" values="4.5;6.5;4.5" dur="2.3s" repeatCount="indefinite"/>
+          </circle>
+          <text x="190" y="52" fill="#FFD700" font-size="10" text-anchor="middle">巴格达</text>
+
+          <circle cx="290" cy="65" r="4.5" fill="#FFD700" filter="url(#glow-strong)">
+            <animate attributeName="r" values="4.5;6.5;4.5" dur="2.8s" repeatCount="indefinite"/>
+          </circle>
+          <text x="290" y="55" fill="#FFD700" font-size="10" text-anchor="middle">撒马尔罕</text>
+
+          <circle cx="390" cy="75" r="4.5" fill="#FF8C00" filter="url(#glow-strong)">
+            <animate attributeName="r" values="4.5;6.5;4.5" dur="2.2s" repeatCount="indefinite"/>
+          </circle>
+          <text x="390" y="67" fill="#FFD700" font-size="10" text-anchor="middle">喀什</text>
+
+          <circle cx="485" cy="85" r="4.5" fill="#FF8C00" filter="url(#glow-strong)">
+            <animate attributeName="r" values="4.5;6.5;4.5" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          <text x="485" y="75" fill="#FFD700" font-size="10" text-anchor="middle">敦煌</text>
+
+          <circle cx="610" cy="100" r="6" fill="#FF6347" filter="url(#glow-strong)">
+            <animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0.7;1" dur="2s"/>
+          </circle>
+          <text x="610" y="90" fill="#FFD700" font-size="11" font-weight="bold" text-anchor="middle">长安</text>
+
+          <!-- 陆路标签 -->
+          <rect x="42" y="116" width="98" height="18" rx="9" fill="rgba(255,200,100,0.08)"/>
+          <text x="91" y="129" fill="rgba(255,200,100,0.5)" font-size="10" text-anchor="middle">🐪 陆上丝路</text>
+
+          <!-- ============================================================ -->
+          <!-- 🌊 海上丝绸之路 -->
+          <!-- ============================================================ -->
+
+          <!-- 海洋底光 -->
+          <path d="M 590 185 Q 520 240 420 225 Q 350 210 310 215 Q 270 220 240 205 Q 190 190 140 200 Q 100 210 60 195 Q 40 185 25 170"
+                fill="none" stroke="rgba(0,206,209,0.06)" stroke-width="22" stroke-linecap="round"/>
+
+          <!-- 海路虚线动画 -->
+          <path d="M 590 185 Q 520 240 420 225 Q 350 210 310 215 Q 270 220 240 205 Q 190 190 140 200 Q 100 210 60 195 Q 40 185 25 170"
+                fill="none" stroke="url(#seaRouteGrad)" stroke-width="2.5"
+                stroke-dasharray="10 10" stroke-linecap="round"
+                filter="url(#glow-sea)">
+            <animate attributeName="stroke-dashoffset" from="0" to="-200" dur="3.5s" repeatCount="indefinite"/>
+          </path>
+
+          <!-- 行船光点 -->
+          <circle r="5" fill="none" filter="url(#glow-sea)">
+            <animateMotion dur="9s" repeatCount="indefinite"
+              path="M 590 185 Q 520 240 420 225 Q 350 210 310 215 Q 270 220 240 205 Q 190 190 140 200 Q 100 210 60 195 Q 40 185 25 170"/>
+            <animate attributeName="fill" values="rgba(0,206,209,0);rgba(0,206,209,0.9);rgba(0,206,209,0.9);rgba(0,206,209,0)" dur="9s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="5" fill="#20B2AA" opacity="0.5" filter="url(#glow-sea)">
+            <animateMotion dur="9s" repeatCount="indefinite"
+              path="M 590 185 Q 520 240 420 225 Q 350 210 310 215 Q 270 220 240 205 Q 190 190 140 200 Q 100 210 60 195 Q 40 185 25 170"/>
+          </circle>
+          <!-- 船帆图标 -->
+          <text font-size="12" fill="#E0FFFF" opacity="0.8" filter="url(#glow-sea)">
+            <animateMotion dur="9s" repeatCount="indefinite"
+              path="M 590 185 Q 520 240 420 225 Q 350 210 310 215 Q 270 220 240 205 Q 190 190 140 200 Q 100 210 60 195 Q 40 185 25 170"/>
+            <animate attributeName="opacity" values="0;0.9;0.9;0" dur="9s" repeatCount="indefinite"/>
+          </text>
+
+          <!-- 海路途经点 -->
+          <!-- 1. 泉州 - 起点 -->
+          <circle cx="590" cy="185" r="6" fill="#00CED1" filter="url(#glow-sea)">
+            <animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <text x="590" y="175" fill="#00CED1" font-size="11" font-weight="bold" text-anchor="middle">泉州</text>
+
+          <!-- 2. 马六甲 -->
+          <circle cx="420" cy="225" r="4.5" fill="#00BFFF" filter="url(#glow-sea)">
+            <animate attributeName="r" values="4.5;6.5;4.5" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          <text x="420" y="215" fill="#40E0D0" font-size="10" text-anchor="middle">马六甲</text>
+
+          <!-- 3. 科伦坡 -->
+          <circle cx="310" cy="215" r="4.5" fill="#00BFFF" filter="url(#glow-sea)">
+            <animate attributeName="r" values="4.5;6.5;4.5" dur="2.8s" repeatCount="indefinite"/>
+          </circle>
+          <text x="310" y="205" fill="#40E0D0" font-size="10" text-anchor="middle">科伦坡</text>
+
+          <!-- 4. 卡利卡特 -->
+          <circle cx="240" cy="205" r="4.5" fill="#00BFFF" filter="url(#glow-sea)">
+            <animate attributeName="r" values="4.5;6.5;4.5" dur="2.2s" repeatCount="indefinite"/>
+          </circle>
+          <text x="240" y="195" fill="#40E0D0" font-size="10" text-anchor="middle">卡利卡特</text>
+
+          <!-- 5. 霍尔木兹 -->
+          <circle cx="140" cy="200" r="4.5" fill="#00BFFF" filter="url(#glow-sea)">
+            <animate attributeName="r" values="4.5;6.5;4.5" dur="2.6s" repeatCount="indefinite"/>
+          </circle>
+          <text x="140" y="190" fill="#40E0D0" font-size="10" text-anchor="middle">霍尔木兹</text>
+
+          <!-- 6. 摩加迪沙 -->
+          <circle cx="60" cy="195" r="4.5" fill="#00BFFF" filter="url(#glow-sea)">
+            <animate attributeName="r" values="4.5;6.5;4.5" dur="2.4s" repeatCount="indefinite"/>
+          </circle>
+          <text x="60" y="185" fill="#40E0D0" font-size="10" text-anchor="middle">摩加迪沙</text>
+
+          <!-- 海路标签 -->
+          <rect x="44" y="238" width="100" height="18" rx="9" fill="rgba(0,206,209,0.08)"/>
+          <text x="94" y="251" fill="rgba(0,206,209,0.5)" font-size="10" text-anchor="middle">⛵ 海上丝路</text>
+
+          <!-- ===== 图例 ===== -->
+          <g transform="translate(274, 268)">
+            <rect x="0" y="0" width="92" height="62" rx="8" fill="rgba(0,0,0,0.3)" stroke="rgba(255,200,100,0.08)" stroke-width="0.5"/>
+            <circle cx="16" cy="14" r="3" fill="#FFD700"/>
+            <text x="24" y="17" fill="rgba(255,200,100,0.5)" font-size="9">陆上丝路</text>
+            <circle cx="16" cy="34" r="3" fill="#00CED1"/>
+            <text x="24" y="37" fill="rgba(0,206,209,0.5)" font-size="9">海上丝路</text>
+            <circle cx="16" cy="54" r="3" fill="#FF6347"/>
+            <text x="24" y="57" fill="rgba(255,200,100,0.5)" font-size="9">起 / 终点</text>
+          </g>
+
+          <!-- 风沙粒子 -->
+          <circle r="1.5" fill="rgba(255,200,100,0.15)">
+            <animateMotion dur="6s" repeatCount="indefinite"
+              path="M 0 0 Q 200 -20 300 0 Q 400 20 640 0"/>
+          </circle>
+          <circle r="1" fill="rgba(255,200,100,0.1)">
+            <animateMotion dur="9s" repeatCount="indefinite"
+              path="M 0 10 Q 200 -10 300 10 Q 400 30 640 10"/>
+          </circle>
+        </svg>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="footer">伊丽莎 · 一锅好味</div>
+  </div>
+</body>
+</html>
