@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>穿越历史 · 互动问答</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=ZCOOL+XiaoWei&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #1a1410;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(139, 90, 43, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 50%, rgba(180, 120, 60, 0.1) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(139, 90, 43, 0.03) 40px, rgba(139, 90, 43, 0.03) 41px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Noto Serif SC', 'ZCOOL XiaoWei', serif;
+  }
+
+  /* Parchment scroll container */
+  .scroll-container {
+    max-width: 820px;
+    width: 100%;
+    background: linear-gradient(170deg, #f5ecd7 0%, #e8dcc4 40%, #ddd0b0 100%);
+    border-radius: 20px;
+    padding: 0;
+    box-shadow:
+      0 20px 80px rgba(0,0,0,0.6),
+      inset 0 1px 0 rgba(255,255,240,0.4),
+      inset 0 -1px 0 rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(139, 90, 43, 0.04) 60px, rgba(139, 90, 43, 0.04) 61px),
+      repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(139, 90, 43, 0.03) 30px, rgba(139, 90, 43, 0.03) 31px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .scroll-inner {
+    position: relative;
+    z-index: 1;
+    padding: 50px 48px 48px;
+  }
+
+  /* Top decorative scroll bar */
+  .scroll-top, .scroll-bottom {
+    height: 28px;
+    background: linear-gradient(180deg, #c8a87a, #b8956a, #c8a87a);
+    border-radius: 14px;
+    margin: -2px 0 0;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2), inset 0 -1px 3px rgba(255,255,240,0.3);
+    position: relative;
+  }
+
+  .scroll-top::after, .scroll-bottom::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 12px;
+    background: linear-gradient(90deg, transparent 0%, #a08050 30%, #a08050 70%, transparent 100%);
+    border-radius: 6px;
+  }
+
+  .scroll-bottom {
+    margin: -2px 0 0;
+    transform: rotate(180deg);
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .header::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #b8956a, transparent);
+    margin: 20px auto 0;
+  }
+
+  .dynasty-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #8b3a2a, #a0522d);
+    color: #f5ecd7;
+    padding: 4px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 4px;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+
+  .header h1 {
+    font-size: 36px;
+    color: #3a2a1a;
+    font-weight: 900;
+    letter-spacing: 6px;
+  }
+
+  .header p {
+    color: #6b5a4a;
+    font-size: 16px;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* Progress bar */
+  .progress-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(139, 90, 43, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #c8a87a, #a0522d);
+    border-radius: 3px;
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .progress-text {
+    font-size: 14px;
+    color: #6b5a4a;
+    font-weight: 600;
+    min-width: 44px;
+    text-align: right;
+  }
+
+  /* Star decoration */
+  .star-divider {
+    text-align: center;
+    color: #b8956a;
+    font-size: 18px;
+    letter-spacing: 12px;
+    margin: 12px 0 20px;
+    opacity: 0.6;
+  }
+
+  /* Question card */
+  .question-area {
+    min-height: 380px;
+  }
+
+  .question-card {
+    background: rgba(255,255,240,0.35);
+    border-radius: 16px;
+    padding: 30px 32px;
+    border: 1px solid rgba(200,168,122,0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  .q-number {
+    font-size: 13px;
+    color: #a08050;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .q-number span {
+    background: rgba(160,128,80,0.15);
+    padding: 2px 10px;
+    border-radius: 8px;
+  }
+
+  .question-text {
+    font-size: 22px;
+    color: #2a1a0a;
+    line-height: 1.7;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  .question-sub {
+    font-size: 15px;
+    color: #7a6a5a;
+    margin-bottom: 24px;
+    line-height: 1.6;
+    font-style: italic;
+    border-left: 3px solid rgba(160,128,80,0.3);
+    padding-left: 16px;
+  }
+
+  /* Options */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: rgba(255,255,245,0.6);
+    border: 1.5px solid rgba(200,168,122,0.25);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: left;
+    font-family: inherit;
+    font-size: 16px;
+    color: #3a2a1a;
+    line-height: 1.5;
+  }
+
+  .option-btn:hover:not(.disabled) {
+    border-color: #c8a87a;
+    background: rgba(255,255,240,0.85);
+    transform: translateX(6px);
+    box-shadow: 0 4px 16px rgba(139,90,43,0.12);
+  }
+
+  .option-btn .letter {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ddd0b0, #c8a87a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #3a2a1a;
+    flex-shrink: 0;
+  }
+
+  .option-btn .letter.correct-letter {
+    background: linear-gradient(135deg, #5a8a5a, #3a6a3a);
+    color: #f0f5e0;
+  }
+
+  .option-btn .letter.wrong-letter {
+    background: linear-gradient(135deg, #b05a4a, #8a3a2a);
+    color: #f5e0d0;
+  }
+
+  .option-btn.selected-correct {
+    border-color: #5a8a5a;
+    background: rgba(90,138,90,0.1);
+  }
+
+  .option-btn.selected-wrong {
+    border-color: #b05a4a;
+    background: rgba(176,90,74,0.08);
+  }
+
+  .option-btn.show-correct:not(.selected-wrong) {
+    border-color: #5a8a5a;
+    background: rgba(90,138,90,0.06);
+  }
+
+  .option-btn.disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  .option-btn.disabled.show-correct {
+    opacity: 1;
+  }
+
+  /* Feedback */
+  .feedback-box {
+    margin-top: 24px;
+    padding: 22px 24px;
+    border-radius: 14px;
+    animation: fadeSlideIn 0.5s ease;
+    border: 1px solid;
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .feedback-box.perfect {
+    background: linear-gradient(135deg, rgba(90,138,90,0.12), rgba(60,100,60,0.06));
+    border-color: rgba(90,138,90,0.3);
+  }
+
+  .feedback-box.good {
+    background: linear-gradient(135deg, rgba(160,128,80,0.12), rgba(200,168,122,0.06));
+    border-color: rgba(160,128,80,0.3);
+  }
+
+  .feedback-box.nope {
+    background: linear-gradient(135deg, rgba(176,90,74,0.1), rgba(139,58,42,0.05));
+    border-color: rgba(176,90,74,0.25);
+  }
+
+  .feedback-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .feedback-title .icon { font-size: 22px; }
+
+  .feedback-box.perfect .feedback-title { color: #3a6a3a; }
+  .feedback-box.good .feedback-title   { color: #7a5a2a; }
+  .feedback-box.nope .feedback-title   { color: #8a3a2a; }
+
+  .feedback-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #3a2a1a;
+  }
+
+  .feedback-body .dynasty-note {
+    display: inline-block;
+    background: rgba(160,128,80,0.12);
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #6b5a4a;
+  }
+
+  .feedback-body em {
+    color: #8b3a2a;
+    font-style: italic;
+  }
+
+  /* Next button */
+  .next-area {
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  .next-btn {
+    padding: 14px 48px;
+    background: linear-gradient(135deg, #8b3a2a, #a0522d);
+    color: #f5ecd7;
+    border: none;
+    border-radius: 30px;
+    font-size: 17px;
+    font-family: inherit;
+    font-weight: 600;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+  }
+
+  .next-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .next-btn:hover {
+    background: linear-gradient(135deg, #7a2a1a, #8b3a2a);
+    box-shadow: 0 6px 24px rgba(139,58,42,0.3);
+    transform: translateY(-1px);
+  }
+
+  /* Results screen */
+  .results-screen {
+    display: none;
+    text-align: center;
+  }
+
+  .results-screen.show {
+    display: block;
+    animation: fadeIn 0.6s ease;
+  }
+
+  .results-title {
+    font-size: 28px;
+    color: #3a2a1a;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  .results-subtitle {
+    font-size: 16px;
+    color: #7a6a5a;
+    margin-bottom: 24px;
+  }
+
+  .results-score-ring {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(#a0522d var(--score-deg), #e8dcc4 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    position: relative;
+  }
+
+  .results-score-ring::before {
+    content: '';
+    width: 114px; height: 114px;
+    border-radius: 50%;
+    background: #f5ecd7;
+    position: absolute;
+  }
+
+  .results-score-text {
+    position: relative;
+    z-index: 1;
+    font-size: 40px;
+    font-weight: 900;
+    color: #3a2a1a;
+  }
+
+  .results-score-text small {
+    font-size: 18px;
+    font-weight: 400;
+    color: #7a6a5a;
+  }
+
+  .verdict {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .verdict-desc {
+    font-size: 15px;
+    color: #6b5a4a;
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .restart-btn {
+    padding: 14px 44px;
+    background: linear-gradient(135deg, #8b3a2a, #a0522d);
+    color: #f5ecd7;
+    border: none;
+    border-radius: 30px;
+    font-size: 17px;
+    font-family: inherit;
+    font-weight: 600;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .restart-btn:hover {
+    background: linear-gradient(135deg, #7a2a1a, #8b3a2a);
+    box-shadow: 0 6px 24px rgba(139,58,42,0.3);
+  }
+
+  .review-list {
+    max-height: 260px;
+    overflow-y: auto;
+    margin: 20px 0 28px;
+    text-align: left;
+    padding: 0 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #c8a87a transparent;
+  }
+
+  .review-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(200,168,122,0.2);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: #3a2a1a;
+    line-height: 1.5;
+  }
+
+  .review-icon { flex-shrink: 0; font-size: 18px; }
+
+  .question-screen.hide {
+    display: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .scroll-inner { padding: 28px 20px; }
+    .header h1 { font-size: 26px; }
+    .question-text { font-size: 18px; }
+    .option-btn { font-size: 15px; padding: 13px 16px; }
+    .feedback-box { padding: 16px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-container">
+  <div class="scroll-top"></div>
+  <div class="scroll-inner">
+
+    <!-- ===== QUESTION VIEW ===== -->
+    <div id="questionScreen" class="question-screen">
+      <div class="header">
+        <div class="dynasty-badge">✦ 史 海 泛 舟 ✦</div>
+        <h1>穿越历史</h1>
+        <p>回答每个问题，你的选择将决定历史如何被讲述</p>
+      </div>
+
+      <div class="progress-area">
+        <div class="progress-track">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+        <span id="progressText" class="progress-text">0/5</span>
+      </div>
+
+      <div class="star-divider">❦ ❦ ❦ ❦ ❦</div>
+
+      <div id="questionArea" class="question-area">
+        <!-- populated by JS -->
+      </div>
+    </div>
+
+    <!-- ===== RESULTS VIEW ===== -->
+    <div id="resultsScreen" class="results-screen">
+      <div style="height:20px"></div>
+      <div class="results-title">📜 考 卷 揭 晓</div>
+      <div class="results-subtitle">历史不会忘记你的答卷</div>
+
+      <div id="scoreRing" class="results-score-ring" style="--score-deg:0deg">
+        <span id="scoreText" class="results-score-text">0<small>/5</small></span>
+      </div>
+
+      <div id="verdictTitle" class="verdict"></div>
+      <div id="verdictDesc" class="verdict-desc"></div>
+
+      <div id="reviewList" class="review-list"></div>
+
+      <button class="restart-btn" onclick="restart()">再 闯 一 次</button>
+      <div style="height:10px"></div>
+    </div>
+
+  </div>
+  <div class="scroll-bottom"></div>
+</div>
+
+<script>
+// ===== QUESTION DATA =====
+const questions = [
+  {
+    id: 1,
+    dynasty: '秦',
+    question: '秦始皇统一六国后，丞相李斯建议推行了一项影响中国两千多年的制度。如果你是李斯，你会建议什么？',
+    sub: '秦朝初立，百废待兴，天下书同文、车同轨…',
+    options: [
+      { id: 'a', text: '分封诸侯，让皇子们各自镇守一方，巩固边防' },
+      { id: 'b', text: '推行郡县制，由中央直接派遣官员治理地方' },
+      { id: 'c', text: '实行联邦制，六国旧地保留自治，只需向咸阳纳贡' },
+    ],
+    answer: 'b',
+    feedback: {
+      perfect: {
+        title: '🎯 洞察时局，眼光长远',
+        body: '你选择了<strong>郡县制</strong>，与李斯的建议不谋而合！郡县制打破了周朝分封制下"国中有国"的格局，让中央能直接号令天下。虽然秦朝国祚短暂，但"郡县"二字从此扎根中国，历代沿袭，直到今天仍在我们的行政体系中留下印记。<span class="dynasty-note">☯ 始皇帝二十六年 · 廷议</span>'
+      },
+      good: {
+        title: '⚖️ 有见地，但略有偏差',
+        body: '你选择的是<strong>分封制</strong>，这其实更像周朝的做法。李斯在当时力排众议，指出分封会导致"诸侯相侵如周"，最终建议了郡县制。不过你并非全无道理——汉初刘邦也曾部分恢复分封，"郡国并行"确实维持了相当长时间。<span class="dynasty-note">☯ 历史没有绝对的对错</span>'
+      },
+      nope: {
+        title: '🌪 时势易变，想法超前了',
+        body: '联邦制听起来很现代，但在两千多年前的秦朝，交通和通信条件下根本无法运作。<em>"书同文，车同轨"</em>正是为了打破地域隔阂。秦始皇和李斯选择了郡县制——一个当时看来激进、却影响深远的制度。后世两千年的历史证明，郡县制才是适合大一统国家的框架。'
+      }
+    }
+  },
+  {
+    id: 2,
+    dynasty: '汉',
+    question: '汉武帝时期，张骞奉命出使西域。半路被匈奴扣留十余年，他终于逃出继续西行。如果你是张骞，历经磨难到了大宛（今费尔干纳），接下来你会做什么？',
+    sub: '跋涉万里，衣衫褴褛，但使命在肩…',
+    options: [
+      { id: 'a', text: '立刻返回长安复命，能活着回去已经是不幸中的万幸' },
+      { id: 'b', text: '继续西行，走访大月氏、安息等国，完成联络使命' },
+      { id: 'c', text: '留在大宛，与当地通商，建立汉朝在西域的第一个据点' },
+    ],
+    answer: 'b',
+    feedback: {
+      perfect: {
+        title: '🏆 不负使命，史册留名',
+        body: '你选择了<strong>继续西行</strong>！这正是张骞的真实选择。他从大宛一路走到大月氏、大夏（巴克特里亚），虽最终未能说服大月氏联合抗匈，但他带回了西域各国的风土、物产和地理信息。<em>"凿空西域"</em>——司马迁这样评价张骞的壮举。他带回的葡萄、苜蓿种子，以及丝绸之路的开辟，改变了整个世界文明的走向。<span class="dynasty-note">☯ 建元三年 · 出陇西</span>'
+      },
+      good: {
+        title: '🔙 情有可原，但错过良机',
+        body: '你选择返回长安。十三年的囚禁确实足以消磨任何人的意志，但张骞选择了继续前行。正是因为他坚持走到了大宛和大月氏，才为汉朝打开了通往西域的大门。<em>丝绸之路</em>上的第一块里程碑，是张骞用二十年岁月铸成的。不过你并非全无道理——他带回去的情报也确实改变了历史。'
+      },
+      nope: {
+        title: '🏠 安于一隅，格局小了',
+        body: '张骞的目标是联合大月氏夹击匈奴，停留在某个地方经商虽然实际，但不是他的使命。正是因为张骞没有中途停下，汉朝才获得了西域的第一手资料——<em>《汉书·西域传》</em>的蓝本就是他带回的报告。你的选择也许更适合一个商人，但历史的转折点往往需要超越常人的坚持。'
+      }
+    }
+  },
+  {
+    id: 3,
+    dynasty: '宋',
+    question: '1127年，金兵南下，北宋覆灭，徽钦二帝被掳。康王赵构在应天府（今商丘）即位，是为宋高宗。他面临着北伐收复故土还是偏安江南的抉择。你认为他应该怎么做？',
+    sub: '山河破碎，中原百姓在铁蹄下呻吟…',
+    options: [
+      { id: 'a', text: '全力北伐，以岳飞等将领为主力，收复汴京、迎回二圣' },
+      { id: 'b', text: '以战求和，边打边谈，守住淮河防线后再图恢复' },
+      { id: 'c', text: '迁都临安，经营南方，凭借长江天险与金对峙' },
+    ],
+    answer: 'a',
+    feedback: {
+      perfect: {
+        title: '⚔️ 壮怀激烈，气吞山河',
+        body: '你选择了<strong>全力北伐</strong>！这正是岳飞、宗泽、韩世忠等抗金将领日夜期盼的决策。1134-1140年间，岳家军接连收复襄阳、郾城、颍昌，在郾城大破金军"拐子马"，前锋直指汴京。<em>"直捣黄龙，与诸君痛饮耳！"</em>——岳飞的豪言成为那个时代最悲壮的注脚。可惜历史中的赵构选择了求和，以"莫须有"的罪名处死了岳飞。<span class="dynasty-note">☯ 绍兴十年 · 朱仙镇</span>'
+      },
+      good: {
+        title: '🤝 审慎务实，代价不菲',
+        body: '你选择以战求和的策略，这其实接近当时主和派的思路。问题是绍兴和议（1141年）的代价是<em>称臣纳贡</em>，每年银25万两、绢25万匹，还搭上了岳飞的性命。南宋确实延续了150年国祚，经济文化也达到了空前繁荣，但"暖风熏得游人醉，直把杭州作汴州"——偏安终究是偏安。'
+      },
+      nope: {
+        title: '🌊 偏安一隅，错失良机',
+        body: '你选择直接迁都临安、经营江南。虽然南宋的经济文化确实在临安达到了巅峰（"苏湖熟，天下足"），但历史上这个决定意味着事实上的放弃中原。迁都临安后，朝廷上下的北伐意志逐渐消磨。岳飞的<em>《满江红》</em>质问着每一个后来者："靖康耻，犹未雪；臣子恨，何时灭！"有些历史机遇一旦错过，就永远回不来了。'
+      }
+    }
+  },
+  {
+    id: 4,
+    dynasty: '明',
+    question: '1405年，明成祖朱棣决定派遣一支前所未有的远洋船队。他需要一个能统领这支庞大舰队的人选。你觉得应该选谁来做统帅？最关键的选拔标准是什么？',
+    sub: '龙江造船，宝船如云，桅杆遮天蔽日…',
+    options: [
+      { id: 'a', text: '选一位身经百战的将军，统领过千军万马才能驾驭这支船队' },
+      { id: 'b', text: '选一位精通航海、了解海外风土的内官监太监' },
+      { id: 'c', text: '选一位饱读诗书的翰林学士，记下沿途见闻，以昭示天朝文教' },
+    ],
+    answer: 'b',
+    feedback: {
+      perfect: {
+        title: '⛵ 慧眼识珠，知人善任',
+        body: '你选择了<strong>精通航海的内官监太监</strong>——这正是郑和！郑和出生于云南回族家庭，祖父和父亲曾远赴麦加朝圣，他从小就听闻海外传奇。他既通晓航海事务，又有卓越的组织才能。<em>郑和七下西洋</em>，率领船队200余艘、官兵27000余人，最远到达东非索马里和肯尼亚，比哥伦布早近一个世纪。<span class="dynasty-note">☯ 永乐三年 · 太仓刘家港</span>'
+      },
+      good: {
+        title: '⚔️ 勇敢有余，但非最佳',
+        body: '你选择了身经百战的将军。明朝确实有这样的将领，比如朱棣麾下的张辅。但西洋之行需要的不仅是军事才能——更需要外交智慧、航海技术和跨文化理解能力。郑和虽然是太监，却是那个时代罕见的具备跨文化视野的航海家。他率领的船队到过30多个国家，从未建立任何殖民地，而是以"厚往薄来"的和平外交闻名。'
+      },
+      nope: {
+        title: '📚 书生气太重，海上行不通',
+        body: '你选择派一位翰林学士。虽然记录见闻确实重要（郑和的随行翻译马欢写了<em>《瀛涯胜览》</em>），但远洋航行需要的是实战统帅能力。宝船舰队最大的宝船长达四十四丈（约137米），比一个足球场还长，驾驭这样一支船队需要的不是文采，而是航海经验、指挥能力和外交手腕。郑和恰恰具备了所有这些素质。'
+      }
+    }
+  },
+  {
+    id: 5,
+    dynasty: '清',
+    question: '1861年，曾国藩的湘军刚刚在与太平天国的战争中站稳脚跟。此时，第二次鸦片战争结束，清政府签订了《北京条约》。曾国藩面临一个重大抉择：是全力消灭太平天国，还是把一部分精力用来学习西方的"坚船利炮"？',
+    sub: '内忧外患，帝国风雨飘摇…',
+    options: [
+      { id: 'a', text: '集中全部力量先消灭太平天国，攘外必先安内' },
+      { id: 'b', text: '双线并进，一边平叛一边在安庆建立军工局，试制西式枪炮' },
+      { id: 'c', text: '暂停镇压太平天国，上书朝廷全面推行洋务改革' },
+    ],
+    answer: 'b',
+    feedback: {
+      perfect: {
+        title: '🎯 经世致用，两手都硬',
+        body: '你选择了<strong>双线并进</strong>，与曾国藩的真实策略完全一致！1861年，曾国藩在安庆设立了<em>安庆内军械所</em>，这是中国近代军事工业的起点。他一边指挥湘军猛攻安庆、进而围困天京，一边让徐寿、华蘅芳等科学家试制蒸汽机和小火轮。"师夷长技以制夷"——曾国藩把这个口号变成了实际行动。正是这些早期的军工实践，为后来的洋务运动奠定了基础。<span class="dynasty-note">☯ 咸丰十一年 · 安庆</span>'
+      },
+      good: {
+        title: '⚔️ 务实专注，但视野受限',
+        body: '你选择先全力消灭太平天国，这确实是曾国藩当时的首要目标。但曾国藩高明之处在于他没有等仗打完才着手学习西方——他在安庆围城的间隙就开始搞军工。他上书说<em>"购买外洋船炮，为今日救时第一要务"</em>。如果你完全等到1864年攻破天京再开始洋务，就错过了整整三年的宝贵时间。'
+      },
+      nope: {
+        title: '📜 理想很好，操之过急',
+        body: '你主张暂停镇压太平天国、全面推行洋务改革。这个想法本身有远见，但1861年的清廷根本没有这个资本——太平天国占据了最富庶的江南，捻军在北方活动，英法联军刚攻入北京。如果此时停止平叛，太平天国可能直接推翻清朝。<em>先存活，再变革</em>——曾国藩的务实路线虽然不完美，但可能是那个困局里唯一可行的道路。'
+      }
+    }
+  }
+];
+
+let currentIndex = 0;
+let score = 0;
+let answers = [];
+let locked = false;
+
+function renderQuestion(index) {
+  const q = questions[index];
+  const area = document.getElementById('questionArea');
+  const pct = Math.round((index / questions.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${index}/${questions.length}`;
+
+  const optsHtml = q.options.map((opt, i) => {
+    const letters = ['A', 'B', 'C', 'D'];
+    return `
+      <button class="option-btn" data-optid="${opt.id}" onclick="selectOption('${opt.id}', ${index})">
+        <span class="letter">${letters[i]}</span>
+        <span>${opt.text}</span>
+      </button>
+    `;
+  }).join('');
+
+  const feedback = answers[index];
+  const feedbackHtml = feedback ? renderFeedback(q, feedback) : '';
+
+  area.innerHTML = `
+    <div class="question-card">
+      <div class="q-number"><span>${q.dynasty} · 第 ${index + 1} 题</span></div>
+      <div class="question-text">${q.question}</div>
+      <div class="question-sub">${q.sub}</div>
+      <div class="options" id="optionsContainer">${optsHtml}</div>
+      <div id="feedbackContainer">${feedbackHtml}</div>
+      <div class="next-area">
+        <button id="nextBtn" class="next-btn ${feedback ? 'show' : ''}" onclick="nextQuestion()">
+          ${index < questions.length - 1 ? '下一题 →' : '查看结果 →'}
+        </button>
+      </div>
+    </div>
+  `;
+
+  if (feedback) {
+    applyMarkers(q, feedback);
+  }
+}
+
+function renderFeedback(q, fb) {
+  const entry = q.feedback[fb.level];
+  return `
+    <div class="feedback-box ${fb.level}">
+      <div class="feedback-title">
+        <span class="icon">${entry.title.split(' ')[0]}</span>
+        <span>${entry.title}</span>
+      </div>
+      <div class="feedback-body">${entry.body}</div>
+    </div>
+  `;
+}
+
+function applyMarkers(q, fb) {
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach(btn => {
+    btn.classList.add('disabled');
+    const id = btn.dataset.optid;
+    if (id === q.answer) btn.classList.add('show-correct');
+    if (id === fb.selected) {
+      btn.classList.add(fb.selected === q.answer ? 'selected-correct' : 'selected-wrong');
+    }
+    const letterSpan = btn.querySelector('.letter');
+    if (id === q.answer) letterSpan.classList.add('correct-letter');
+    if (id === fb.selected && id !== q.answer) letterSpan.classList.add('wrong-letter');
+  });
+}
+
+function selectOption(optId, index) {
+  if (locked) return;
+  const q = questions[index];
+  const prev = answers[index];
+  if (prev) return; // already answered
+
+  const isCorrect = optId === q.answer;
+  let level;
+  if (isCorrect) {
+    level = 'perfect';
+    score++;
+  } else {
+    // Determine "good" vs "nope" based on the option
+    const optIdx = q.options.findIndex(o => o.id === optId);
+    level = optIdx === 1 ? 'good' : 'nope';
+  }
+
+  answers[index] = { selected: optId, level };
+  locked = true;
+
+  renderQuestion(index);
+  locked = false;
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex < questions.length) {
+    renderQuestion(currentIndex);
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  document.getElementById('questionScreen').classList.add('hide');
+  const rs = document.getElementById('resultsScreen');
+  rs.classList.add('show');
+
+  // Animate score ring
+  const pct = (score / questions.length) * 100;
+  const deg = (score / questions.length) * 360;
+  setTimeout(() => {
+    document.getElementById('scoreRing').style.setProperty('--score-deg', deg + 'deg');
+    document.getElementById('scoreText').innerHTML = `${score}<small>/${questions.length}</small>`;
+  }, 100);
+
+  let verdictTitle, verdictDesc;
+  if (score === questions.length) {
+    verdictTitle = '🏛️ 史学大家';
+    verdictDesc = '全对！你仿佛亲历了每一个历史现场，洞察了古人的每一个抉择。你的历史直觉令人叹服——或许你上辈子就是一位藏在竹简背后的史官。';
+  } else if (score >= 3) {
+    verdictTitle = '📖 通晓古今';
+    verdictDesc = '你对历史脉络有扎实的把握。那些选错的题目背后，都藏着一段令人唏嘘的故事——历史的魅力不在于"对错"，而在于理解每个选择背后的局限与勇气。';
+  } else if (score >= 1) {
+    verdictTitle = '🔍 史海初探';
+    verdictDesc = '历史是一面镜子，照见的是人性的复杂。你的答案虽然和历史事实有出入，但每个"错误"选择在当时的语境下都情有可原。<em>读史使人明智</em>——多一次思考，就多一分理解。';
+  } else {
+    verdictTitle = '🌅 从头读史';
+    verdictDesc = '历史就像一本厚重的书，翻开它的方式有很多种。你的答案提醒我们：历史的每一个转折点都不是理所当然的。<em>以史为鉴，可以知兴替</em>——越了解过去，越能看清未来。';
+  }
+
+  document.getElementById('verdictTitle').textContent = verdictTitle;
+  document.getElementById('verdictDesc').innerHTML = verdictDesc;
+
+  // Review list
+  const reviewHtml = questions.map((q, i) => {
+    const fb = answers[i];
+    const correct = fb && fb.selected === q.answer;
+    return `
+      <div class="review-item">
+        <span class="review-icon">${correct ? '✅' : '❌'}</span>
+        <div>
+          <strong>第 ${i + 1} 题</strong>（${q.dynasty}）— ${correct ? '正确' : q.options.find(o => o.id === fb?.selected)?.text?.slice(0, 20) + '…'}
+          <div style="font-size:13px;color:#7a6a5a;">正确答案：${q.options.find(o => o.id === q.answer)?.text?.slice(0, 30)}…</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('reviewList').innerHTML = reviewHtml;
+}
+
+function restart() {
+  currentIndex = 0;
+  score = 0;
+  answers = [];
+  locked = false;
+  document.getElementById('resultsScreen').classList.remove('show');
+  document.getElementById('questionScreen').classList.remove('hide');
+  document.getElementById('scoreRing').style.setProperty('--score-deg', '0deg');
+  document.getElementById('scoreText').innerHTML = '0<small>/5</small>';
+  renderQuestion(0);
+}
+
+// Init
+renderQuestion(0);
+</script>
+</body>
+</html>
