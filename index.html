@@ -220,6 +220,34 @@
       transform: translateX(4px);
     }
 
+    .sub-links {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+    .sub-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: rgba(255,200,100,0.05);
+      border: 1px solid rgba(255,200,100,0.12);
+      border-radius: 12px;
+      color: rgba(255,200,100,0.65);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+    .sub-link:hover {
+      background: rgba(255,200,100,0.1);
+      border-color: rgba(255,200,100,0.3);
+      color: rgba(255,200,100,0.9);
+      transform: translateY(-1px);
+    }
+
     @media (max-width: 480px) {
       .card { padding: 30px 20px; }
       .title { font-size: 32px; }
@@ -545,6 +573,12 @@
         <span class="link-text">穿越历史 · 互动问答</span>
         <span class="link-arrow">→</span>
       </a>
+      <div class="sub-links">
+        <a href="baosteel-history-class.html" class="sub-link" target="_blank">📜 宝钢 · 史料实证课堂</a>
+        <a href="economic-globalization-debate.html" class="sub-link" target="_blank">🌐 经济全球化 · 辩论</a>
+        <a href="baosteel-profile.html" class="sub-link" target="_blank">🏭 宝钢 · 企业档案</a>
+        <a href="climate-history-classroom.html" class="sub-link" target="_blank">🌍 气候·历史教室</a>
+      </div>
     </div>
 
     <div class="divider"></div>

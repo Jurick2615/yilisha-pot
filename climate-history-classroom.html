@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>气候与人类关系 · 初中历史大概念课程</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1a1410;
+      --bg-card: #262018;
+      --bg-elevated: #322a22;
+      --bg-hover: #3d342b;
+      --border: #3d342b;
+      --border-light: #5a4a3a;
+      --text-primary: #f0e8d8;
+      --text-secondary: #c4b8a8;
+      --text-tertiary: #8a7e6e;
+      --gold: #d4a843;
+      --gold-light: #e8c86a;
+      --gold-dark: #b8922a;
+      --accent-1: #d4a843;
+      --accent-2: #7ab87a;
+      --accent-3: #6a9ec4;
+      --accent-4: #c47a6a;
+      --radius: 12px;
+      --radius-sm: 6px;
+      --radius-pill: 9999px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(26,20,16,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    nav .logo {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+    nav .logo span { color: var(--text-secondary); font-weight: 400; }
+    nav .nav-links { display: flex; gap: 8px; align-items: center; }
+    nav .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px; padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      transition: all 0.2s;
+    }
+    nav .nav-links a:hover {
+      color: var(--gold);
+      background: var(--bg-elevated);
+    }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--bg) !important;
+      font-weight: 700;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--bg) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; padding: 8px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text-secondary); border-radius: 2px; transition: 0.2s; }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 140px 32px 80px;
+      text-align: center;
+      background: linear-gradient(180deg, #1a1410 0%, #201a14 50%, #1a1410 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse 800px 400px at 50% 0%, rgba(212,168,67,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 600px at 20% 100%, rgba(106,158,196,0.03) 0%, transparent 60%),
+        radial-gradient(ellipse 600px 600px at 80% 100%, rgba(122,184,122,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(212,168,67,0.12);
+      color: var(--gold-light);
+      font-size: 12px; font-weight: 500;
+      padding: 4px 16px; border-radius: var(--radius-pill);
+      border: 1px solid rgba(212,168,67,0.2);
+      margin-bottom: 24px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin: 0 auto 40px;
+      line-height: 1.8;
+    }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 48px;
+      flex-wrap: wrap;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 36px; font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .hero-stat .label {
+      font-size: 12px; color: var(--text-tertiary);
+      margin-top: 4px; letter-spacing: 1px;
+    }
+
+    /* ===== SECTION ===== */
+    section { padding: 80px 32px; }
+    .section-header {
+      text-align: center; margin-bottom: 56px;
+    }
+    .section-header h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .section-header h2 .accent { color: var(--gold); }
+    .section-header p {
+      font-size: 15px; color: var(--text-secondary);
+      max-width: 520px; margin: 0 auto;
+    }
+    .section-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+      border-radius: 2px; margin: 16px auto;
+    }
+
+    /* ===== CHARACTER GRID ===== */
+    .characters {
+      max-width: 1200px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .char-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .char-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .char-card:nth-child(1)::before { background: var(--accent-1); }
+    .char-card:nth-child(2)::before { background: var(--accent-2); }
+    .char-card:nth-child(3)::before { background: var(--accent-3); }
+    .char-card:nth-child(4)::before { background: var(--accent-4); }
+    .char-card:hover {
+      border-color: var(--border-light);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+    .char-card:hover::before { opacity: 1; }
+    .char-card.active {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold), var(--shadow);
+    }
+    .char-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 32px;
+    }
+    .char-card:nth-child(1) .char-avatar { background: rgba(212,168,67,0.15); }
+    .char-card:nth-child(2) .char-avatar { background: rgba(122,184,122,0.15); }
+    .char-card:nth-child(3) .char-avatar { background: rgba(106,158,196,0.15); }
+    .char-card:nth-child(4) .char-avatar { background: rgba(196,122,106,0.15); }
+    .char-card h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px; font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .char-card .char-title {
+      font-size: 12px; color: var(--gold);
+      letter-spacing: 1px; margin-bottom: 12px;
+      font-weight: 500;
+    }
+    .char-card:nth-child(2) .char-title { color: var(--accent-2); }
+    .char-card:nth-child(3) .char-title { color: var(--accent-3); }
+    .char-card:nth-child(4) .char-title { color: var(--accent-4); }
+    .char-card .char-desc {
+      font-size: 13px; color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .char-quote {
+      margin-top: 14px;
+      padding: 12px;
+      background: rgba(212,168,67,0.06);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-style: italic;
+      line-height: 1.5;
+      border-left: 2px solid rgba(212,168,67,0.2);
+      display: none;
+    }
+    .char-card.active .char-quote { display: block; }
+    .char-card:nth-child(2) .char-quote { border-left-color: rgba(122,184,122,0.3); }
+    .char-card:nth-child(3) .char-quote { border-left-color: rgba(106,158,196,0.3); }
+    .char-card:nth-child(4) .char-quote { border-left-color: rgba(196,122,106,0.3); }
+
+    /* ===== LESSONS ===== */
+    .lessons { background: var(--bg-card); }
+    .lessons-container {
+      max-width: 900px; margin: 0 auto;
+    }
+    .lesson-tabs {
+      display: flex; gap: 4px;
+      background: var(--bg);
+      padding: 4px;
+      border-radius: var(--radius);
+      margin-bottom: 32px;
+    }
+    .lesson-tab {
+      flex: 1;
+      padding: 12px 16px;
+      text-align: center;
+      font-size: 14px; font-weight: 500;
+      color: var(--text-tertiary);
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .lesson-tab:hover { color: var(--text-secondary); background: var(--bg-hover); }
+    .lesson-tab.active {
+      background: var(--gold);
+      color: var(--bg);
+      font-weight: 700;
+    }
+    .lesson-tab .tab-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px; opacity: 0.6;
+      display: block; margin-bottom: 2px;
+    }
+    .lesson-tab.active .tab-num { opacity: 0.8; }
+    .lesson-content { display: none; }
+    .lesson-content.active { display: block; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .lesson-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .lesson-card h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 22px; font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .lesson-card .lesson-subtitle {
+      font-size: 13px; color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .lesson-card .lesson-intro {
+      font-size: 14px; color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ai-dialogue {
+      display: flex; flex-direction: column; gap: 16px;
+      margin-bottom: 24px;
+    }
+    .msg {
+      display: flex; gap: 12px; align-items: flex-start;
+      max-width: 85%;
+    }
+    .msg.right { margin-left: auto; flex-direction: row-reverse; }
+    .msg-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .msg-avatar.n1 { background: rgba(212,168,67,0.2); }
+    .msg-avatar.n2 { background: rgba(122,184,122,0.2); }
+    .msg-avatar.n3 { background: rgba(106,158,196,0.2); }
+    .msg-avatar.n4 { background: rgba(196,122,106,0.2); }
+    .msg-bubble {
+      background: var(--bg-elevated);
+      padding: 12px 16px;
+      border-radius: 4px 16px 16px 16px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+    .msg.right .msg-bubble {
+      border-radius: 16px 4px 16px 16px;
+      background: rgba(212,168,67,0.08);
+      border: 1px solid rgba(212,168,67,0.12);
+    }
+    .msg-name {
+      font-size: 11px; font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .msg.right .msg-name { color: var(--gold); }
+    .msg .msg-name.n2 { color: var(--accent-2); }
+    .msg .msg-name.n3 { color: var(--accent-3); }
+    .msg .msg-name.n4 { color: var(--accent-4); }
+
+    .knowledge-box {
+      background: rgba(212,168,67,0.06);
+      border: 1px solid rgba(212,168,67,0.15);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      margin-top: 16px;
+    }
+    .knowledge-box h4 {
+      font-size: 13px; color: var(--gold);
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .knowledge-box ul {
+      list-style: none; padding: 0;
+    }
+    .knowledge-box li {
+      font-size: 13px; color: var(--text-secondary);
+      padding: 4px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+    .knowledge-box li::before {
+      content: '◆';
+      position: absolute; left: 0;
+      color: var(--gold);
+      font-size: 8px;
+      top: 8px;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+      margin-top: 20px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 8px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--gold-dark), var(--gold), var(--gold-dark));
+      opacity: 0.3;
+    }
+    .tl-item { position: relative; margin-bottom: 20px; }
+    .tl-item::before {
+      content: '';
+      position: absolute; left: -24px; top: 6px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--bg);
+    }
+    .tl-item .year {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px; font-weight: 700;
+      color: var(--gold);
+    }
+    .tl-item .tl-desc {
+      font-size: 13px; color: var(--text-secondary);
+    }
+    .tl-item:nth-child(2)::before { background: var(--accent-2); }
+    .tl-item:nth-child(3)::before { background: var(--accent-3); }
+    .tl-item:nth-child(4)::before { background: var(--accent-4); }
+
+    /* ===== INTERACTIVE SECTION ===== */
+    .interactive-section { 
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-card) 100%);
+    }
+    .question-box {
+      max-width: 700px; margin: 0 auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+    }
+    .question-box h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px; margin-bottom: 12px;
+    }
+    .question-box p {
+      font-size: 14px; color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .q-btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .q-btn {
+      padding: 10px 24px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .q-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(212,168,67,0.06);
+    }
+    .q-btn.selected {
+      background: var(--gold);
+      color: var(--bg);
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+    .q-feedback {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      display: none;
+      background: rgba(212,168,67,0.06);
+      border: 1px solid rgba(212,168,67,0.15);
+    }
+    .q-feedback.show { display: block; animation: fadeIn 0.3s ease; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 40px 32px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+    footer .footer-links { margin-top: 12px; display: flex; gap: 16px; justify-content: center; }
+    footer a { color: var(--text-tertiary); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 64px; left: 0; right: 0;
+        background: rgba(26,20,16,0.98);
+        backdrop-filter: blur(16px);
+        padding: 16px;
+        border-bottom: 1px solid var(--border);
+        gap: 4px;
+      }
+      .hero { padding: 120px 16px 60px; }
+      .hero-stats { gap: 24px; }
+      .hero-stat .num { font-size: 28px; }
+      section { padding: 60px 16px; }
+      .characters { grid-template-columns: 1fr 1fr; }
+      .lesson-tab { font-size: 12px; padding: 10px 8px; }
+      .lesson-tab .tab-num { display: inline; margin-right: 4px; }
+      .msg { max-width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .characters { grid-template-columns: 1fr; }
+      .lesson-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">🌍 气候·历史 <span>智能课堂</span></div>
+  <div class="nav-links" id="navLinks">
+    <a href="#roles">智能体</a>
+    <a href="#lessons">课程</a>
+    <a href="#interactive">互动</a>
+    <a href="#lessons" class="nav-cta">开始学习</a>
+  </div>
+  <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">大概念教学 · 跨学科融合</div>
+  <h1>气候与 <em>人类关系</em></h1>
+  <p>
+    从采集渔猎到农耕文明，从王朝兴衰到工业革命——气候始终是人类历史的隐形书写者。<br>
+    三位一体课程，四位角色引导，带你穿越万年，读懂气候与文明的对话。
+  </p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">3</div><div class="label">课时设计</div></div>
+    <div class="hero-stat"><div class="num">4</div><div class="label">AI 角色</div></div>
+    <div class="hero-stat"><div class="num">4</div><div class="label">学科融合</div></div>
+    <div class="hero-stat"><div class="num">10,000+</div><div class="label">年历史跨度</div></div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section id="roles">
+  <div class="section-header">
+    <h2>四位 <span class="accent">教育智能体</span></h2>
+    <div class="section-divider"></div>
+    <p>每一课时将由四位不同学科的 AI 专家协作引导，从多元视角揭示气候与人类历史的深层关联</p>
+  </div>
+  <div class="characters">
+    <div class="char-card active" onclick="selectChar(this)">
+      <div class="char-avatar">🏛️</div>
+      <h3>林老师</h3>
+      <div class="char-title">历史导师</div>
+      <div class="char-desc">资深中学历史教师，善用宏大叙事串联文明脉络。擅长将气候事件与历史转折点关联，引导学生建立系统的历史思维。</div>
+      <div class="char-quote">"历史不是孤立的事件，每一场干旱、每一次寒潮，都在改写人类的命运。"</div>
+    </div>
+    <div class="char-card" onclick="selectChar(this)">
+      <div class="char-avatar">🔍</div>
+      <h3>陈博士</h3>
+      <div class="char-title" style="color:var(--accent-2)">考古学家</div>
+      <div class="char-desc">田野考古专家，从地层、古 pollen、年轮中读取气候密码。用实物证据让消失的文明在课堂上"复活"。</div>
+      <div class="char-quote">"每一层泥土都是一页史书——4.2千年事件让古埃及崩溃，这不是传说，是地层告诉我的。"</div>
+    </div>
+    <div class="char-card" onclick="selectChar(this)">
+      <div class="char-avatar">🌏</div>
+      <h3>王教授</h3>
+      <div class="char-title" style="color:var(--accent-3)">地理学家</div>
+      <div class="char-desc">自然地理学者，研究气候变化对文明分布的塑造。从撒哈拉绿洲到丝绸之路，解读地理大格局下的人类选择。</div>
+      <div class="char-quote">"季风决定收成，纬度塑造文明——当你理解地理，历史就有了空间坐标。"</div>
+    </div>
+    <div class="char-card" onclick="selectChar(this)">
+      <div class="char-avatar">🔬</div>
+      <h3>张博士</h3>
+      <div class="char-title" style="color:var(--accent-4)">气候科学家</div>
+      <div class="char-desc">气候系统研究者，用数据模型解读历史气候事件。冰芯、沉积物、历史文献中的气候记录，在她的手中变成可见的曲线。</div>
+      <div class="char-quote">"CO₂浓度从280ppm飙升到420ppm，这个速度在地球46亿年历史上从未有过。"</div>
+    </div>
+  </div>
+</section>
+
+<!-- LESSONS -->
+<section id="lessons" class="lessons">
+  <div class="section-header">
+    <h2>三课时 <span class="accent">课程设计</span></h2>
+    <div class="section-divider"></div>
+    <p>从远古到现代，三节课构建完整的认知链条</p>
+  </div>
+  <div class="lessons-container">
+    <div class="lesson-tabs">
+      <button class="lesson-tab active" onclick="switchLesson(0)">
+        <span class="tab-num">第一课时</span>
+        气候与早期文明
+      </button>
+      <button class="lesson-tab" onclick="switchLesson(1)">
+        <span class="tab-num">第二课时</span>
+        气候与历史转折
+      </button>
+      <button class="lesson-tab" onclick="switchLesson(2)">
+        <span class="tab-num">第三课时</span>
+        适应与未来启示
+      </button>
+    </div>
+
+    <!-- LESSON 1 -->
+    <div class="lesson-content active" data-lesson="0">
+      <div class="lesson-card">
+        <h3>气候与早期人类文明</h3>
+        <div class="lesson-subtitle">从非洲到两河流域 · 采集、迁徙与农耕革命</div>
+        <div class="lesson-intro">
+          本课时聚焦距今20万年至公元前2000年的宏大叙事。人类如何走出非洲？为什么最早的城市出现在两河流域？气候如何催生了农业革命？四位智能体将带领学生穿越旧石器时代到青铜时代，理解气候变迁如何塑造了人类文明的第一章。
+        </div>
+
+        <div class="ai-dialogue">
+          <div class="msg">
+            <div class="msg-avatar n1">🏛️</div>
+            <div class="msg-bubble">
+              <div class="msg-name" style="color:var(--gold)">林老师</div>
+              同学们，想象一下：如果地球进入冰河期，海平面会下降100多米——那时候，现在的台湾海峡是陆地，远古人类可以步行从亚洲走到美洲！气候不是历史的背景板，它就是历史的主角之一。
+            </div>
+          </div>
+          <div class="msg right">
+            <div class="msg-avatar n2">🔍</div>
+            <div class="msg-bubble">
+              <div class="msg-name n2">陈博士</div>
+              是的！我在东非的考古发掘中找到了证据。约7万年前，超级火山多峇喷发导致全球气温骤降，人类基因多样性在那时大幅降低——差点灭绝。但幸存下来的人类凭借智慧和适应能力，走出了非洲。
+            </div>
+          </div>
+          <div class="msg">
+            <div class="msg-avatar n3">🌏</div>
+            <div class="msg-bubble">
+              <div class="msg-name n3">王教授</div>
+              来，我们看地图。末次冰盛期（约2万年前），全球平均气温比现在低6°C，大陆冰盖覆盖了北美和北欧。海平面下降120米，露出了白令陆桥——人类就是通过这条路进入美洲的。
+            </div>
+          </div>
+          <div class="msg right">
+            <div class="msg-avatar n4">🔬</div>
+            <div class="msg-bubble">
+              <div class="msg-name n4">张博士</div>
+              我用冰芯数据验证这一点。格陵兰冰芯的氧同位素记录显示，从末次冰盛期到全新世（1.17万年前），全球温度在几千年内上升了约5°C。正是这次升温，为农业革命创造了条件。
+            </div>
+          </div>
+          <div class="msg">
+            <div class="msg-avatar n1">🏛️</div>
+            <div class="msg-bubble">
+              <div class="msg-name" style="color:var(--gold)">林老师</div>
+              所以，同学们要记住的大概念来了：<strong>气候的稳定性是文明发展的前提。</strong>全新世以来相对稳定的气候，让人类能够预测季节、种植作物、定居生活，最终诞生了美索不达米亚、古埃及、古印度和古中华四大文明。
+            </div>
+          </div>
+        </div>
+
+        <div class="knowledge-box">
+          <h4>📖 核心知识</h4>
+          <ul>
+            <li>多峇火山喷发（约7.4万年前）导致了人类种群的遗传瓶颈</li>
+            <li>末次冰盛期（约2万年前）海平面下降120米，暴露大陆架</li>
+            <li>全新世气候适宜期（约9000-5000年前）催生了全球农业革命</li>
+            <li>四大文明古国均诞生于北纬20°-40°的大河流域——这个纬度带恰好是气候最温和的区域</li>
+          </ul>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item"><span class="year">20万年前</span> <span class="tl-desc">智人在非洲出现，经历多次冰期-间冰期交替</span></div>
+          <div class="tl-item"><span class="year">7.4万年前</span> <span class="tl-desc">多峇火山喷发，全球气温骤降，人类近乎灭绝</span></div>
+          <div class="tl-item"><span class="year">2万年前</span> <span class="tl-desc">末次冰盛期，海平面最低，人类迁徙到各大洲</span></div>
+          <div class="tl-item"><span class="year">1.17万年前</span> <span class="tl-desc">全新世开始，气候变暖，农业在中东新月沃地萌芽</span></div>
+          <div class="tl-item"><span class="year">公元前3500年</span> <span class="tl-desc">苏美尔文明在两河流域诞生——人类最早的城市文明</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 2 -->
+    <div class="lesson-content" data-lesson="1">
+      <div class="lesson-card">
+        <h3>气候变迁与历史转折</h3>
+        <div class="lesson-subtitle">王朝兴衰 · 丝绸之路 · 小冰期 · 大航海</div>
+        <div class="lesson-intro">
+          气候不仅仅是"背景"，它经常成为历史天平上决定性的砝码。本课时聚焦气候事件如何推动王朝更迭、引发人口迁移、改变战争走向——从中国历史上的温暖期与寒冷期交替，到欧洲小冰期与黑死病，再到气候驱动的全球化进程。
+        </div>
+
+        <div class="ai-dialogue">
+          <div class="msg">
+            <div class="msg-avatar n1">🏛️</div>
+            <div class="msg-bubble">
+              <div class="msg-name" style="color:var(--gold)">林老师</div>
+              中国历史上有句话叫"天下大势，分久必合，合久必分"。但你有没有想过，这个"大势"，很大程度上是由气候决定的？竺可桢先生的研究表明，中国历史上三次温暖期恰恰对应了三个统一强盛的大王朝。
+            </div>
+          </div>
+          <div class="msg right">
+            <div class="msg-avatar n3">🌏</div>
+            <div class="msg-bubble">
+              <div class="msg-name n3">王教授</div>
+              我用地理数据来补充。中国历史气候有两大规律：第一，温暖期 = 强盛期（秦汉、隋唐、明清）；第二，寒冷期 = 动荡期（魏晋南北朝、宋辽金对峙、明末农民起义）。气候转冷导致北方草场退化，游牧民族南下，中原王朝压力骤增。
+            </div>
+          </div>
+          <div class="msg">
+            <div class="msg-avatar n2">🔍</div>
+            <div class="msg-bubble">
+              <div class="msg-name n2">陈博士</div>
+              考古证据也支持这个结论。我和团队分析过青海湖湖泊沉积物中的花粉和盐度指标，发现唐朝灭亡前的公元9世纪，中国经历了一场持续近百年的干旱——这与黄巢起义、唐朝崩溃的时间高度吻合。
+            </div>
+          </div>
+          <div class="msg right">
+            <div class="msg-avatar n4">🔬</div>
+            <div class="msg-bubble">
+              <div class="msg-name n4">张博士</div>
+              放大到全球视角。14-19世纪的小冰期是近千年最显著的气候事件。全球平均气温下降约0.6°C，听起来很小，但后果是灾难性的。格陵兰的北欧殖民地因此消亡，冰岛人口减半，欧洲粮食歉收引发大饥荒。
+            </div>
+          </div>
+          <div class="msg">
+            <div class="msg-avatar n1">🏛️</div>
+            <div class="msg-bubble">
+              <div class="msg-name" style="color:var(--gold)">林老师</div>
+              但历史总是在危机中孕育转机。正是小冰期导致欧洲农业崩溃，促使欧洲人寻找新的航路——大航海时代、地理大发现，某种程度上也是气候"逼"出来的。哥伦布发现新大陆（1492年）正处于小冰期最冷的阶段之一。
+            </div>
+          </div>
+        </div>
+
+        <div class="knowledge-box">
+          <h4>📖 核心知识</h4>
+          <ul>
+            <li>竺可桢的中国五千年气候变迁研究：温暖期对应强盛王朝</li>
+            <li>公元9世纪大干旱与唐朝崩溃、玛雅文明衰落的同步性</li>
+            <li>小冰期（约1300-1850年）对欧洲、亚洲、美洲的多维影响</li>
+            <li>明清易代（17世纪中期）恰逢小冰期中最冷的"蒙德极小期"</li>
+            <li>气候驱动的探索：大航海时代的气候背景</li>
+          </ul>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item"><span class="year">公元初-300年</span> <span class="tl-desc">罗马暖期，罗马帝国鼎盛，中国"光武中兴"</span></div>
+          <div class="tl-item"><span class="year">300-600年</span> <span class="tl-desc">气候转冷，民族大迁徙，西罗马灭亡，中国五胡乱华</span></div>
+          <div class="tl-item"><span class="year">600-900年</span> <span class="tl-desc">隋唐暖期，全球温湿，唐帝国步入盛世</span></div>
+          <div class="tl-item"><span class="year">900-1300年</span> <span class="tl-desc">中世纪暖期，维京人殖民格陵兰，蒙古帝国崛起</span></div>
+          <div class="tl-item"><span class="year">1300-1850年</span> <span class="tl-desc">小冰期，黑死病、大饥荒、大航海、工业革命酝酿</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 3 -->
+    <div class="lesson-content" data-lesson="2">
+      <div class="lesson-card">
+        <h3>人类对气候的适应与反思</h3>
+        <div class="lesson-subtitle">古代智慧 · 工业革命 · 全球变暖 · 共生未来</div>
+        <div class="lesson-intro">
+          前三节课我们看到了气候如何影响人类。现在问题翻转了：人类如何反过来影响气候？从古代都江堰到当代碳中和，从刀耕火种到工业革命——人类从气候的"被动接受者"变成了"主动影响者"。本课时引导学生思考：我们该如何与气候共生？
+        </div>
+
+        <div class="ai-dialogue">
+          <div class="msg">
+            <div class="msg-avatar n1">🏛️</div>
+            <div class="msg-bubble">
+              <div class="msg-name" style="color:var(--gold)">林老师</div>
+              同学们，前两节课我们看到了气候"支配"人类的一面。但这节课我想告诉你们另一个故事——人类不是被动的。都江堰（公元前256年）、坎儿井、梯田系统，都是古人在恶劣气候下的智慧创造。
+            </div>
+          </div>
+          <div class="msg right">
+            <div class="msg-avatar n2">🔍</div>
+            <div class="msg-bubble">
+              <div class="msg-name n2">陈博士</div>
+              我补充一个更早的例子。在秘鲁的卡拉尔文明（公元前3000年），人们建造了复杂的灌溉系统来应对干旱。在印度河流域，哈拉帕文明有世界上最古老的公共浴场和排水系统——他们都是气候适应的先驱。
+            </div>
+          </div>
+          <div class="msg">
+            <div class="msg-avatar n3">🌏</div>
+            <div class="msg-bubble">
+              <div class="msg-name n3">王教授</div>
+              转折发生在18世纪。工业革命使人类获得了前所未有的改造自然的能力。蒸汽机让我们摆脱了对生物能源的依赖，但也同时开启了大规模燃烧化石能源的时代——人类第一次成为了全球气候变化的"驱动力"。
+            </div>
+          </div>
+          <div class="msg right">
+            <div class="msg-avatar n4">🔬</div>
+            <div class="msg-bubble">
+              <div class="msg-name n4">张博士</div>
+              数据是最有力的证据。工业革命前，大气CO₂浓度长期稳定在280ppm左右。2024年已经达到约420ppm——增长了50%！全球平均气温比工业化前上升了约1.2°C。更关键的是<strong>速度</strong>——过去100年的升温速度是自然变化的10倍以上。
+            </div>
+          </div>
+          <div class="msg">
+            <div class="msg-avatar n1">🏛️</div>
+            <div class="msg-bubble">
+              <div class="msg-name" style="color:var(--gold)">林老师</div>
+              这就引出了本课程的大概念升华：<strong>人与气候的关系，从"依赖"到"对抗"再到"反思"。</strong>今天的碳中和、新能源革命，本质上就是人类在新时代对气候的又一次"适应"。历史告诉我们，适应气候变化的能力，决定了一个文明的存续。同学们，你们就是未来适应方案的创造者！
+            </div>
+          </div>
+        </div>
+
+        <div class="knowledge-box">
+          <h4>📖 核心知识</h4>
+          <ul>
+            <li>古代气候适应智慧：都江堰（排灌）、坎儿井（地下水渠）、梯田（水土保持）</li>
+            <li>工业革命（1760年代）成为人-气候关系的分水岭</li>
+            <li>1750-2024年大气CO₂浓度从280ppm升至约420ppm</li>
+            <li>全球变暖与极端气候事件频发的科学关联</li>
+            <li>碳中和目标：2060年中国碳中和承诺——《巴黎协定》的全球行动</li>
+          </ul>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item"><span class="year">公元前256年</span> <span class="tl-desc">李冰父子修建都江堰——人与自然和谐共生的典范</span></div>
+          <div class="tl-item"><span class="year">1760-1840年</span> <span class="tl-desc">工业革命，化石能源大规模使用，CO₂排放开始攀升</span></div>
+          <div class="tl-item"><span class="year">1970年代</span> <span class="tl-desc">全球变暖进入科学界视野，"全球变暖"一词出现</span></div>
+          <div class="tl-item"><span class="year">2015年</span> <span class="tl-desc">《巴黎协定》通过，全球195个国家承诺控制升温</span></div>
+          <div class="tl-item"><span class="year">2020+年</span> <span class="tl-desc">碳中和时代：中国承诺2060碳中和，全球能源转型加速</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE -->
+<section id="interactive" class="interactive-section">
+  <div class="section-header">
+    <h2>思考与 <span class="accent">互动</span></h2>
+    <div class="section-divider"></div>
+    <p>选择你的观点，看看四位智能体怎么说</p>
+  </div>
+  <div class="question-box">
+    <h3>💭 核心思辨题</h3>
+    <p>学习了三课时的内容，你认为以下哪种说法最能概括"气候与人类关系"的大概念？点击选择，听听四位智能体的见解。</p>
+    <div class="q-btn-group">
+      <button class="q-btn" onclick="selectAnswer(this,0)">气候决定了文明的方向</button>
+      <button class="q-btn" onclick="selectAnswer(this,1)">人类始终在适应气候中进步</button>
+      <button class="q-btn" onclick="selectAnswer(this,2)">人与气候是相互塑造的</button>
+      <button class="q-btn" onclick="selectAnswer(this,3)">科技使人最终超越气候限制</button>
+    </div>
+    <div class="q-feedback" id="qFeedback"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>气候与人类关系 · 初中历史大概念课程 · 四位 AI 教育智能体协作设计</p>
+  <p>融合历史 · 地理 · 考古 · 气候科学 · 跨学科大概念教学</p>
+  <div class="footer-links">
+    <a href="#roles">智能体介绍</a>
+    <a href="#lessons">课程内容</a>
+    <a href="#interactive">互动思辨</a>
+  </div>
+</footer>
+
+<script>
+  // Character card selection
+  function selectChar(el) {
+    document.querySelectorAll('.char-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Lesson tab switching
+  function switchLesson(idx) {
+    document.querySelectorAll('.lesson-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+    document.querySelectorAll('.lesson-content').forEach((c, i) => c.classList.toggle('active', i === idx));
+    // scroll to lessons section with offset
+    document.getElementById('lessons').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Interactive answer selection
+  const feedbackData = [
+    {
+      title: "🌍 林老师回应",
+      content: "有道理但不全面。气候确实给文明划定了边界——人类无法在冰盖上演化出农业。但看看都江堰、坎儿井就知道，人类从不是被动接受者。文明的方向，是气候条件和人类能动性共同绘制的轨迹。"
+    },
+    {
+      title: "🔍 陈博士回应",
+      content: "从考古角度看，这个观点最接近历史事实。每一次重大气候变迁，人类都展现出惊人的适应能力——从迁徙到技术创新。但注意，古代社会的适应速度很慢（以世纪为单位），而今天的气候变化速度远超过往。"
+    },
+    {
+      title: "🌏 王教授回应",
+      content: "这是最全面的概括。气候塑造了文明的地理格局（比如四大文明都出现在大河流域），而人类活动（尤其是工业革命后）正在重塑全球气候系统。我们正处于一种全新的人-气候关系中——不再是被动的单向关系，而是闭环的相互塑造。"
+    },
+    {
+      title: "🔬 张博士回应",
+      content: "科技确实让我们突破了自然限制——空调、灌溉、天气预报都是例证。但数据告诉我们：过去100年升温1.2°C，极端天气增加300%。科技再发达，我们也是地球生态系统的一部分。未来不是'超越气候'，而是用科技智慧地与气候共存。"
+    }
+  ];
+
+  function selectAnswer(btn, idx) {
+    document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    const fb = document.getElementById('qFeedback');
+    const data = feedbackData[idx];
+    fb.innerHTML = `<div style="font-weight:700;color:var(--gold);margin-bottom:8px;">${data.title}</div><div style="color:var(--text-secondary);font-size:14px;line-height:1.8;">${data.content}</div>`;
+    fb.classList.add('show');
+  }
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // close mobile nav
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+<!-- ===== CHAT WIDGET ===== -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<div class="chat-toggle" id="chatToggle" onclick="toggleChat()">
+  <i class="fas fa-comment-dots"></i>
+</div>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <span class="chat-header-icon">💬</span>
+      <span>AI 智能体对话</span>
+    </div>
+    <button class="chat-close" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="chat-char-select">
+    <button class="chat-char-btn active" data-char="林老师" onclick="selectChatChar(this)">
+      <span>🏛️</span> 林老师
+    </button>
+    <button class="chat-char-btn" data-char="陈博士" onclick="selectChatChar(this)">
+      <span>🔍</span> 陈博士
+    </button>
+    <button class="chat-char-btn" data-char="王教授" onclick="selectChatChar(this)">
+      <span>🌏</span> 王教授
+    </button>
+    <button class="chat-char-btn" data-char="张博士" onclick="selectChatChar(this)">
+      <span>🔬</span> 张博士
+    </button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg char">
+      <div class="chat-msg-avatar" style="background:rgba(212,168,67,0.15);">🏛️</div>
+      <div class="chat-msg-content">
+        <div class="chat-msg-name" style="color:var(--gold);">林老师</div>
+        <div class="chat-msg-text">你好！我是林老师，历史导师。关于气候与人类关系，你想了解什么？可以直接问我任何问题！😊</div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-input-area">
+    <div class="chat-suggestions" id="chatSuggestions">
+      <button onclick="sendSuggestion('气候如何影响古埃及文明？')">古埃及与气候</button>
+      <button onclick="sendSuggestion('小冰期是什么？')">什么是小冰期</button>
+      <button onclick="sendSuggestion('古代中国有哪些应对气候的智慧？')">古人气候智慧</button>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" class="chat-input" id="chatInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter') sendMessage()">
+      <button class="chat-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+
+<style>
+.chat-toggle {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #c99230);
+  color: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 999;
+  font-size: 24px;
+  box-shadow: 0 4px 20px rgba(212,168,67,0.4);
+  transition: all 0.3s ease;
+}
+.chat-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(212,168,67,0.5);
+}
+.chat-panel {
+  position: fixed; bottom: 100px; right: 28px;
+  width: 380px; height: 580px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.chat-panel.open { display: flex; }
+.chat-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+.chat-header-info { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.chat-header-info span:last-child { font-family: 'Noto Sans SC', sans-serif; }
+.chat-close {
+  background: none; border: none; color: var(--text-tertiary);
+  cursor: pointer; font-size: 18px; padding: 4px 8px;
+  border-radius: 6px; transition: 0.2s;
+}
+.chat-close:hover { background: var(--bg-hover); color: var(--text-primary); }
+.chat-char-select {
+  display: flex; gap: 4px; padding: 8px 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.chat-char-btn {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-tertiary);
+  font-size: 12px; cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.chat-char-btn:hover { border-color: var(--gold); color: var(--gold); }
+.chat-char-btn.active {
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 16px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.chat-msg { display: flex; gap: 10px; align-items: flex-start; }
+.chat-msg.user { flex-direction: row-reverse; }
+.chat-msg-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.chat-msg-content { max-width: 80%; }
+.chat-msg-name { font-size: 11px; font-weight: 600; margin-bottom: 3px; }
+.chat-msg.user .chat-msg-name { color: var(--gold); text-align: right; }
+.chat-msg-text {
+  font-size: 13px; line-height: 1.65;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  padding: 10px 14px;
+  border-radius: 4px 14px 14px 14px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.chat-msg.user .chat-msg-text {
+  background: rgba(212,168,67,0.1);
+  border: 1px solid rgba(212,168,67,0.15);
+  border-radius: 14px 4px 14px 14px;
+}
+.chat-msg.loading .chat-msg-text {
+  background: var(--bg-elevated);
+  color: var(--text-tertiary);
+  font-style: italic;
+  animation: pulse 1.5s ease infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.chat-input-area {
+  padding: 12px 16px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+.chat-suggestions {
+  display: flex; gap: 6px; margin-bottom: 10px;
+  overflow-x: auto; padding-bottom: 4px;
+}
+.chat-suggestions button {
+  flex-shrink: 0;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-tertiary);
+  font-size: 11px; cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Noto Sans SC', sans-serif;
+  white-space: nowrap;
+}
+.chat-suggestions button:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.chat-input-row {
+  display: flex; gap: 8px;
+}
+.chat-input {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: 13px;
+  outline: none;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.chat-input:focus { border-color: var(--gold); }
+.chat-input::placeholder { color: var(--text-tertiary); }
+.chat-send {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--gold);
+  color: var(--bg);
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.chat-send:hover { background: var(--gold-light); transform: scale(1.05); }
+.chat-send:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+@media (max-width: 480px) {
+  .chat-panel { width: calc(100vw - 24px); right: 12px; bottom: 88px; height: 70vh; }
+  .chat-toggle { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 20px; }
+}
+</style>
+
+<script>
+let currentChar = '林老师';
+let chatHistory = [];
+
+function toggleChat() {
+  const panel = document.getElementById('chatPanel');
+  panel.classList.toggle('open');
+}
+
+function selectChatChar(btn) {
+  document.querySelectorAll('.chat-char-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentChar = btn.dataset.char;
+  chatHistory = [];
+  const msgs = document.getElementById('chatMessages');
+  msgs.innerHTML = '';
+  // Add welcome message
+  const charNames = {
+    '林老师': { emoji: '🏛️', style: 'color:var(--gold);', bg: 'rgba(212,168,67,0.15)',
+      welcome: '你好！我是林老师，历史导师。关于历史与气候的话题，随时可以问我！😊' },
+    '陈博士': { emoji: '🔍', style: 'color:var(--accent-2);', bg: 'rgba(122,184,122,0.15)',
+      welcome: '你好！我是陈博士，考古学家。想听我讲讲考古发现背后的气候故事吗？🔍' },
+    '王教授': { emoji: '🌏', style: 'color:var(--accent-3);', bg: 'rgba(106,158,196,0.15)',
+      welcome: '你好！我是王教授，地理学家。让我们一起从地理视角看气候与文明！🌏' },
+    '张博士': { emoji: '🔬', style: 'color:var(--accent-4);', bg: 'rgba(196,122,106,0.15)',
+      welcome: '你好！我是张博士，气候科学家。用数据说话，带你了解真实的气候变迁！🔬' }
+  };
+  const c = charNames[currentChar];
+  addCharMessage(c.emoji, currentChar, c.welcome, c.style, c.bg);
+}
+
+function addCharMessage(emoji, name, text, nameStyle, avatarBg) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg char';
+  div.innerHTML = '<div class="chat-msg-avatar" style="background:' + avatarBg + ';">' + emoji + '</div>' +
+    '<div class="chat-msg-content">' +
+    '<div class="chat-msg-name" style="' + nameStyle + '">' + name + '</div>' +
+    '<div class="chat-msg-text">' + text + '</div></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addUserMessage(text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg user';
+  div.innerHTML = '<div class="chat-msg-content">' +
+    '<div class="chat-msg-name">我</div>' +
+    '<div class="chat-msg-text">' + escapeHtml(text) + '</div></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  chatHistory.push({ role: 'user', content: text });
+}
+
+function addLoadingMessage() {
+  const msgs = document.getElementById('chatMessages');
+  const charData = getCharData(currentChar);
+  const div = document.createElement('div');
+  div.className = 'chat-msg char loading';
+  div.id = 'loadingMsg';
+  div.innerHTML = '<div class="chat-msg-avatar" style="background:' + charData.bg + ';">' + charData.emoji + '</div>' +
+    '<div class="chat-msg-content">' +
+    '<div class="chat-msg-name" style="' + charData.style + '">' + currentChar + '</div>' +
+    '<div class="chat-msg-text">思考中...</div></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeLoadingMessage() {
+  const el = document.getElementById('loadingMsg');
+  if (el) el.remove();
+}
+
+function getCharData(name) {
+  const map = {
+    '林老师': { emoji: '🏛️', style: 'color:var(--gold);', bg: 'rgba(212,168,67,0.15)' },
+    '陈博士': { emoji: '🔍', style: 'color:var(--accent-2);', bg: 'rgba(122,184,122,0.15)' },
+    '王教授': { emoji: '🌏', style: 'color:var(--accent-3);', bg: 'rgba(106,158,196,0.15)' },
+    '张博士': { emoji: '🔬', style: 'color:var(--accent-4);', bg: 'rgba(196,122,106,0.15)' }
+  };
+  return map[name] || map['林老师'];
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+
+function sendSuggestion(text) {
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  addUserMessage(text);
+
+  // Show loading
+  addLoadingMessage();
+
+  // Disable send button
+  document.querySelector('.chat-send').disabled = true;
+
+  fetch('/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      character: currentChar,
+      message: text,
+      history: chatHistory.slice(-6)
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    removeLoadingMessage();
+    if (data.error) {
+      addCharMessage('⚠️', '系统', data.error, 'color:#c47a6a;', 'rgba(196,122,106,0.15)');
+      return;
+    }
+    const charData = getCharData(currentChar);
+    addCharMessage(charData.emoji, currentChar, data.reply, charData.style, charData.bg);
+    chatHistory.push({ role: 'assistant', content: data.reply });
+  })
+  .catch(err => {
+    removeLoadingMessage();
+    addCharMessage('⚠️', '系统', '网络请求失败，请稍后再试～', 'color:#c47a6a;', 'rgba(196,122,106,0.15)');
+  })
+  .finally(() => {
+    document.querySelector('.chat-send').disabled = false;
+  });
+}
+</script>
+
+</body>
+</html>
