@@ -188,66 +188,6 @@
       letter-spacing: 2px; margin-top: 10px;
     }
 
-    .links-section {
-      margin: 20px 0 10px;
-    }
-    .history-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 28px;
-      background: rgba(255,200,100,0.08);
-      border: 1px solid rgba(255,200,100,0.2);
-      border-radius: 16px;
-      color: rgba(255,200,100,0.85);
-      text-decoration: none;
-      font-size: 16px;
-      letter-spacing: 2px;
-      transition: all 0.3s ease;
-    }
-    .history-link:hover {
-      background: rgba(255,200,100,0.15);
-      border-color: rgba(255,200,100,0.4);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(255,200,100,0.1);
-    }
-    .link-icon { font-size: 20px; }
-    .link-arrow {
-      transition: transform 0.3s ease;
-      font-size: 18px;
-    }
-    .history-link:hover .link-arrow {
-      transform: translateX(4px);
-    }
-
-    .sub-links {
-      margin-top: 12px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-    }
-    .sub-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 18px;
-      background: rgba(255,200,100,0.05);
-      border: 1px solid rgba(255,200,100,0.12);
-      border-radius: 12px;
-      color: rgba(255,200,100,0.65);
-      text-decoration: none;
-      font-size: 13px;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-    }
-    .sub-link:hover {
-      background: rgba(255,200,100,0.1);
-      border-color: rgba(255,200,100,0.3);
-      color: rgba(255,200,100,0.9);
-      transform: translateY(-1px);
-    }
-
     @media (max-width: 480px) {
       .card { padding: 30px 20px; }
       .title { font-size: 32px; }
@@ -564,39 +504,6 @@
               path="M 0 10 Q 200 -10 300 10 Q 400 30 640 10"/>
           </circle>
         </svg>
-      </div>
-    </div>
-
-    <div class="links-section">
-      <a href="history-quiz.html" class="history-link" target="_blank">
-        <span class="link-icon">🏯</span>
-        <span class="link-text">穿越历史 · 互动问答</span>
-        <span class="link-arrow">→</span>
-      </a>
-      <div class="sub-links">
-        <a href="baosteel-history-class.html" class="sub-link" target="_blank">📜 宝钢 · 史料实证课堂</a>
-        <a href="economic-globalization-debate.html" class="sub-link" target="_blank">🌐 经济全球化 · 辩论</a>
-        <a href="baosteel-profile.html" class="sub-link" target="_blank">🏭 宝钢 · 企业档案</a>
-        <a href="climate-history-classroom.html" class="sub-link" target="_blank">🌍 气候·历史教室</a>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- 📚 知识库 -->
-    <div class="links-section" style="margin-bottom:0;">
-      <a href="https://github.com/Jurick2615/jurick_obsidian" class="history-link" target="_blank" style="font-size:15px;">
-        <span class="link-icon">📚</span>
-        <span class="link-text">证券运维知识库</span>
-        <span class="link-arrow">→</span>
-      </a>
-      <div class="sub-links">
-        <a href="https://github.com/Jurick2615/jurick_obsidian/blob/main/xcb-wiki/%E7%94%9F%E4%BA%A7%E4%B8%9A%E5%8A%A1/%E8%AE%A2%E5%8D%95%E8%AF%81%E5%88%B8-%E8%B7%A8%E5%A2%83ETF.md" class="sub-link" target="_blank">📄 订单证券-跨境ETF</a>
-        <a href="https://github.com/Jurick2615/jurick_obsidian/blob/main/xcb-wiki/%E7%94%9F%E4%BA%A7%E4%B8%9A%E5%8A%A1/%E6%96%B0%E8%82%A1%E7%94%B3%E8%B4%AD.md" class="sub-link" target="_blank">📄 新股申购</a>
-        <a href="https://github.com/Jurick2615/jurick_obsidian/blob/main/xcb-wiki/%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/%E5%8D%A1%E6%96%B9-%E5%AE%A2%E6%88%B7%E7%99%BB%E5%BD%95%E4%B8%8D%E5%90%88%E6%B3%95.md" class="sub-link" target="_blank">🔧 卡方-登录不合法</a>
-        <a href="https://github.com/Jurick2615/jurick_obsidian/blob/main/xcb-wiki/%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83/%E7%BB%BC%E5%90%88%E4%B8%9A%E5%8A%A1%E5%B9%B3%E5%8F%B0%E6%8E%A5%E5%8F%A3%E8%A7%84%E6%A0%BC%E8%AF%B4%E6%98%8E%E4%B9%A6.md" class="sub-link" target="_blank">📋 综合业务平台接口</a>
-        <a href="https://github.com/Jurick2615/jurick_obsidian/blob/main/xcb-wiki/%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83/%E6%B8%AF%E8%82%A1%E9%80%9A%E5%B8%82%E5%9C%BA%E5%8F%82%E4%B8%8E%E8%80%85%E6%8E%A5%E5%8F%A3%E8%A7%84%E6%A0%BC%E8%AF%B4%E6%98%8E%E4%B9%A6.md" class="sub-link" target="_blank">📋 港股通接口</a>
-        <a href="https://github.com/Jurick2615/jurick_obsidian/blob/main/xcb-wiki/%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83/%E4%BA%92%E8%81%94%E7%BD%91%E4%BA%A4%E6%98%93%E5%B9%B3%E5%8F%B0%E6%8E%A5%E5%8F%A3%E8%A7%84%E6%A0%BC%E8%AF%B4%E6%98%8E%E4%B9%A6.md" class="sub-link" target="_blank">📋 互联网交易平台接口</a>
       </div>
     </div>
 
